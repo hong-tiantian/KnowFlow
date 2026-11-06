@@ -1,0 +1,32 @@
+# --- Keep the demo recording private (not shown publicly) ---
+docs/demo.gif
+docs/demo.mp4
+docs/demo.webm
+docs/demo.apng
+
+# --- Build artifacts ---
+# Remove this line if you want to commit the packaged zip for releases.
+dist/
+
+# --- Secrets / local config (never commit keys) ---
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Node (only if you add tooling later) ---
+node_modules/
+npm-debug.log*

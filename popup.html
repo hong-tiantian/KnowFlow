@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #d946a0;
+      --text: #1d1d1f;
+      --text-secondary: #7a7a82;
+      --border: rgba(0, 0, 0, 0.10);
+      --surface: #f5f5f6;
+      --surface-strong: #ececef;
+      --link: #d946a0;
+    }
+
+    body {
+      width: 306px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      padding: 18px 18px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; }
+    .logo { width: 30px; height: 30px; flex-shrink: 0; }
+    .logo svg { display: block; border-radius: 7px; }
+    .header h1 { font-size: 16px; font-weight: 650; flex: 1; }
+    .version { font-size: 11px; color: var(--text-secondary); }
+
+    .card { background: var(--surface); border-radius: 10px; padding: 4px 14px; margin-bottom: 14px; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 0; min-height: 40px; }
+    .row-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .row-label { font-size: 13.5px; font-weight: 500; }
+    .row-sub { font-size: 11px; color: var(--text-secondary); max-width: 178px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .toggle { position: relative; width: 40px; height: 24px; cursor: pointer; flex-shrink: 0; }
+    .toggle input { display: none; }
+    .toggle-track { position: absolute; inset: 0; background: #d6d6da; border-radius: 999px; transition: background 0.2s; }
+    .toggle input:checked + .toggle-track { background: var(--accent); }
+    .toggle-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 0.22s cubic-bezier(0.16,1,0.3,1); }
+    .toggle input:checked ~ .toggle-thumb { transform: translateX(16px); }
+    .toggle input:disabled ~ .toggle-track { opacity: 0.5; }
+
+    .field { margin-bottom: 14px; }
+    .field-label { font-size: 10.5px; font-weight: 750; letter-spacing: 0.04em; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 7px; display: block; }
+
+    input[type="password"], input[type="text"], select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,70,160,0.12); }
+    input[type="password"] { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: 0.5px; }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: "";
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid var(--text-secondary);
+      border-bottom: 1.5px solid var(--text-secondary);
+      transform: translateY(-65%) rotate(45deg);
+      pointer-events: none;
+    }
+    select { padding-right: 30px; cursor: pointer; appearance: none; -webkit-appearance: none; }
+
+    .hint { font-size: 11px; color: var(--text-secondary); margin-top: 6px; line-height: 1.4; }
+    .hint a, .link { color: var(--link); text-decoration: none; }
+    .hint a:hover, .link:hover { text-decoration: underline; }
+
+    #apiKeyField { display: none; }
+    #apiKeyField.show { display: block; }
+
+    .footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .help-link { font-size: 12.5px; color: var(--link); text-decoration: none; cursor: pointer; }
+    .help-link:hover { text-decoration: underline; }
+
+    .btn {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 9px;
+      font-size: 13.5px;
+      font-weight: 650;
+      font-family: inherit;
+      cursor: pointer;
+      background: var(--text);
+      color: #fff;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn:hover { background: var(--accent); }
+    .btn:active { transform: scale(0.97); }
+
+    .status { font-size: 12px; text-align: center; border-radius: 8px; max-height: 0; padding: 0 8px; margin-top: 0; opacity: 0; overflow: hidden; transition: max-height 0.2s, padding 0.2s, margin-top 0.2s, opacity 0.2s; pointer-events: none; }
+    .status.show { max-height: 40px; padding: 8px; margin-top: 12px; opacity: 1; }
+    .status.success { background: rgba(217,70,160,0.12); color: #9b1f6b; }
+    .status.error { background: #fdecec; color: #c5221f; }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #f5f5f7;
+        --text-secondary: #a0a0a8;
+        --border: rgba(255,255,255,0.14);
+        --surface: #2c2c2e;
+        --surface-strong: #3a3a3c;
+        --link: #e859b1;
+      }
+      body { background: #1c1c1e; }
+      input, select { background: #2c2c2e; color: var(--text); }
+      .btn { background: #f5f5f7; color: #1c1c1e; }
+      .btn:hover { background: var(--accent); color: #fff; }
+      .toggle-track { background: #55555a; }
+      .status.success { color: #f3a6d5; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect width="16" height="16" rx="3.2" fill="#1d1d1f"/>
+        <rect x="1" y="1" width="14" height="14" rx="2.6" fill="none"/>
+        <g fill="#f5f5f7">
+          <rect x="6" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/>
+          <rect x="6" y="6" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/>
+          <rect x="6" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/>
+          <rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/>
+          <rect x="6" y="9" width="1" height="1"/><rect x="8" y="9" width="1" height="1"/>
+          <rect x="6" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/>
+          <rect x="6" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/>
+        </g>
+      </svg>
+    </div>
+    <h1>KnowFlow</h1>
+    <span class="version">v1.2</span>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <span class="row-label">Enable extension</span>
+      <label class="toggle">
+        <input type="checkbox" id="enableToggle" checked>
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
+      </label>
+    </div>
+    <div class="row">
+      <div class="row-text">
+        <span class="row-label">Active on this site</span>
+        <span class="row-sub" id="siteHost">Loading...</span>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="siteToggle" checked>
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label">Model</label>
+    <div class="select-wrap">
+      <select id="providerSelect">
+        <option value="free">Free · GPT-OSS 20B (no key)</option>
+        <option value="byok">Use your own API key</option>
+      </select>
+    </div>
+    <div class="hint" id="providerHint"></div>
+  </div>
+
+  <div class="field" id="apiKeyField">
+    <label class="field-label">Provider</label>
+    <div class="select-wrap">
+      <select id="presetSelect">
+        <option value="gemini">Google Gemini</option>
+        <option value="openrouter">OpenRouter</option>
+        <option value="groq">Groq</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="openai">OpenAI</option>
+        <option value="custom">Custom (OpenAI-compatible)</option>
+      </select>
+    </div>
+    <div class="hint" id="presetHint"></div>
+
+    <label class="field-label" style="margin-top:13px;">Model</label>
+    <input type="text" id="apiModelInput" placeholder="model name" autocomplete="off" spellcheck="false">
+
+    <div id="endpointField" style="display:none;">
+      <label class="field-label" style="margin-top:13px;">API endpoint</label>
+      <input type="text" id="apiEndpointInput" placeholder="https://.../chat/completions" autocomplete="off" spellcheck="false">
+    </div>
+
+    <label class="field-label" style="margin-top:13px;">API key</label>
+    <input type="password" id="apiKeyInput" placeholder="paste your key" autocomplete="off">
+    <div class="hint">Stored only on this device, never synced. Sent only to the endpoint above.</div>
+  </div>
+
+  <div class="field">
+    <label class="field-label">Output language</label>
+    <div class="select-wrap">
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="zh-CN">Simplified Chinese</option>
+        <option value="zh-TW">Traditional Chinese</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="ru">Russian</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label">Obsidian vault</label>
+    <input type="text" id="obsidianVaultInput" placeholder="Optional vault name">
+    <div class="hint">Leave blank to use Obsidian's default or currently open vault.</div>
+  </div>
+
+  <div class="footer">
+    <a class="help-link" id="helpLink">How to use</a>
+    <button class="btn" id="saveBtn">Save</button>
+  </div>
+
+  <div class="status" id="statusMsg"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

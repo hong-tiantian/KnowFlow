@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KnowFlow - How to use</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #d946a0;
+      --text: #1d1d1f;
+      --muted: #777780;
+      --border: rgba(0,0,0,0.08);
+      --surface: #ffffff;
+      --page: #fbfbfc;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--page);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 56px 28px 80px; }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .logo svg { display: block; border-radius: 8px; }
+    h1 { font-size: 30px; font-weight: 750; }
+    .tagline { color: var(--muted); font-size: 16px; margin-bottom: 42px; }
+    h2 { font-size: 19px; font-weight: 650; margin: 36px 0 14px; }
+    p, li { font-size: 15px; color: var(--text); }
+    ol, ul { padding-left: 22px; }
+    li { margin: 7px 0; }
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li {
+      position: relative;
+      padding: 14px 16px 14px 52px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--text);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 8px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+    code { background: #eeeeef; padding: 1px 6px; border-radius: 5px; font-size: 13px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer { margin-top: 56px; color: #a2a2a9; font-size: 13px; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #f5f5f7;
+        --muted: #a0a0a8;
+        --border: rgba(255,255,255,0.12);
+        --surface: #2c2c2e;
+        --page: #1c1c1e;
+      }
+      .steps li::before { background: #f5f5f7; color: #1c1c1e; }
+      code { background: #3a3a3c; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo">
+        <svg width="40" height="40" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect width="16" height="16" rx="3.2" fill="#1d1d1f"/>
+          <g fill="#f5f5f7">
+            <rect x="6" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/>
+            <rect x="6" y="6" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/>
+            <rect x="6" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/>
+            <rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/>
+            <rect x="6" y="9" width="1" height="1"/><rect x="8" y="9" width="1" height="1"/>
+            <rect x="6" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/>
+            <rect x="6" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/>
+          </g>
+        </svg>
+      </span>
+      <h1>KnowFlow</h1>
+    </div>
+    <p class="tagline">Select a term, open an AI knowledge card, and follow related concepts side by side.</p>
+
+    <h2>Getting started</h2>
+    <ol class="steps">
+      <li><b>Select a word or phrase</b> on any page. A small <span class="pill">spark</span> button appears next to the selection.</li>
+      <li><b>Click the button.</b> KnowFlow opens a compact card with an explanation, related concepts, and source searches.</li>
+      <li><b>Explore deeper.</b> Click any related concept to open another card beside the current one. You can also select text inside a card.</li>
+      <li><b>Dismiss cards</b> with the close button, or click elsewhere on the page to clear the stack.</li>
+    </ol>
+
+    <h2>Model setup</h2>
+    <p>Open the extension popup and choose a model:</p>
+    <ul>
+      <li><b>Free &middot; GPT-OSS 20B (no key)</b>: the default. Uses an open-source model with no setup. It is rate-limited (about one request every 45 seconds) and slower, so it suits occasional lookups.</li>
+      <li><b>Use your own API key</b>: for faster, unlimited lookups. Pick a provider (Google Gemini, OpenRouter, Groq, DeepSeek, OpenAI, or a custom OpenAI-compatible endpoint), paste your key, and the model and endpoint fill in for you. Several providers have a free tier. Your key is stored only on this device and never synced.</li>
+    </ul>
+
+    <h2>Output language</h2>
+    <p>KnowFlow defaults to English. You can switch the output language in the popup. The selected term keeps its standard spelling.</p>
+
+    <h2>Save to Obsidian</h2>
+    <p>Each knowledge card has a <b>Save to Obsidian</b> button. It creates a Markdown note through Obsidian URI with the explanation, related concepts, sources, original page URL, and capture time. Add a vault name in the popup if you want notes to open in a specific vault.</p>
+
+    <h2>Site controls</h2>
+    <p>Use <b>Active on this site</b> to disable KnowFlow on the current domain. Use <b>Enable extension</b> to turn it off everywhere.</p>
+
+    <div class="note">
+      <b>Privacy note:</b> KnowFlow sends the selected term and nearby text context to the model provider you choose. Your API key is stored only on this device (local storage) and is never synced. Do not use it on pages with sensitive personal, company, or client information.
+    </div>
+
+    <h2>Where it works</h2>
+    <p>Regular web pages, local HTML files after enabling file URL access, and text inside frames where Chrome allows content scripts.</p>
+
+    <div class="footer">KnowFlow v1.0</div>
+  </div>
+</body>
+</html>

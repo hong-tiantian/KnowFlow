@@ -1,0 +1,312 @@
+:root {
+  --knowflow-ink: #1d1d1f;
+  --knowflow-muted: #7a7a82;
+  --knowflow-soft: #f4f4f5;
+  --knowflow-border: rgba(0, 0, 0, 0.1);
+  --knowflow-accent: #d946a0;
+  --knowflow-accent-soft: rgba(217, 70, 160, 0.12);
+}
+
+.knowflow-trigger {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #1d1d1f;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 2147483646;
+  opacity: 0;
+  transform: scale(0.72);
+  transition: opacity 0.16s cubic-bezier(0.16, 1, 0.3, 1), transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+
+.knowflow-trigger-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.knowflow-trigger:hover {
+  transform: scale(1.08);
+  background: var(--knowflow-accent);
+  box-shadow: 0 8px 22px rgba(217, 70, 160, 0.32);
+}
+
+.knowflow-trigger svg { display: block; }
+
+.knowflow-card {
+  position: absolute;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border: 1px solid var(--knowflow-border);
+  border-radius: 10px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--knowflow-ink);
+  padding: 15px 16px 16px;
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transform-origin: top center;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-font-smoothing: antialiased;
+}
+
+.knowflow-card-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.knowflow-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.knowflow-title {
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.28;
+  color: var(--knowflow-ink);
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.knowflow-close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: -4px -4px 0 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #8c8c94;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.knowflow-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--knowflow-ink);
+}
+
+.knowflow-explain {
+  font-size: 12px;
+  color: var(--knowflow-muted);
+  line-height: 1.45;
+  margin-bottom: 9px;
+}
+
+.knowflow-detail {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--knowflow-ink);
+}
+
+.knowflow-recent {
+  margin-top: 11px;
+  padding: 8px 10px;
+  background: var(--knowflow-accent-soft);
+  border: 1px solid rgba(217, 70, 160, 0.18);
+  border-radius: 8px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--knowflow-ink);
+}
+
+.knowflow-recent-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--knowflow-accent);
+  margin-right: 7px;
+  vertical-align: 1px;
+}
+
+.knowflow-section { margin-top: 13px; }
+
+.knowflow-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9a9aa1;
+  margin-bottom: 7px;
+}
+
+.knowflow-rels {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.knowflow-rel {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.knowflow-rel-desc {
+  font-size: 11px;
+  color: var(--knowflow-muted);
+  line-height: 1.35;
+}
+
+.knowflow-pill {
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 4px 10px;
+  background: var(--knowflow-soft);
+  color: var(--knowflow-ink);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.knowflow-pill:hover {
+  background: var(--knowflow-accent);
+  border-color: var(--knowflow-accent);
+  color: #ffffff;
+}
+
+.knowflow-pill:active { transform: scale(0.97); }
+
+.knowflow-inline {
+  color: var(--knowflow-accent);
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 0 2px;
+  transition: background 0.15s;
+}
+
+.knowflow-inline:hover { background: var(--knowflow-accent-soft); }
+
+.knowflow-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.knowflow-link {
+  font-size: 11.5px;
+  color: var(--knowflow-accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  max-width: 100%;
+  transition: opacity 0.15s;
+}
+
+.knowflow-link:hover { opacity: 0.72; }
+.knowflow-link-arrow { font-size: 11px; opacity: 0.68; }
+
+.knowflow-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.knowflow-save {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1;
+  color: #ffffff;
+  background: var(--knowflow-ink);
+  border: 1px solid var(--knowflow-ink);
+  border-radius: 8px;
+  padding: 8px 11px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.knowflow-save:hover {
+  background: var(--knowflow-accent);
+  border-color: var(--knowflow-accent);
+}
+
+.knowflow-save:active { transform: scale(0.98); }
+
+.knowflow-skeleton {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.knowflow-sk-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.11) 37%, rgba(0,0,0,0.05) 63%);
+  background-size: 400% 100%;
+  animation: knowflow-shimmer 1.4s ease infinite;
+}
+
+@keyframes knowflow-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --knowflow-ink: #f5f5f7;
+    --knowflow-muted: #a0a0a8;
+    --knowflow-soft: rgba(255, 255, 255, 0.1);
+    --knowflow-border: rgba(255, 255, 255, 0.13);
+    --knowflow-accent-soft: rgba(232, 89, 177, 0.16);
+  }
+
+  .knowflow-trigger {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.44);
+  }
+
+  .knowflow-trigger:hover {
+    background: var(--knowflow-accent);
+    color: #ffffff;
+  }
+
+  .knowflow-card {
+    background: rgba(29, 29, 31, 0.94);
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.48);
+  }
+
+  .knowflow-close { color: #a0a0a8; }
+  .knowflow-close:hover { background: rgba(255,255,255,0.1); color: #f5f5f7; }
+  .knowflow-label { color: #77777e; }
+  .knowflow-pill { border-color: rgba(255,255,255,0.08); }
+  .knowflow-recent { border-color: rgba(232, 89, 177, 0.26); }
+  .knowflow-actions { border-top-color: rgba(255, 255, 255, 0.11); }
+  .knowflow-save { color: #1d1d1f; background: #f5f5f7; border-color: #f5f5f7; }
+  .knowflow-save:hover { color: #ffffff; background: var(--knowflow-accent); border-color: var(--knowflow-accent); }
+  .knowflow-sk-line {
+    background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.13) 37%, rgba(255,255,255,0.06) 63%);
+    background-size: 400% 100%;
+  }
+}
